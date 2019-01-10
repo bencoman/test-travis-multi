@@ -1,11 +1,12 @@
-language: ruby
-
-os:
-#  - windows
-  - linux
-  - osx 
+language: c
 
 osx_image: xcode7.3
+
+os:
+  - windows
+  - linux
+  - linux
+  - osx 
 
 env:
   - DIALECT=squeak
@@ -17,12 +18,6 @@ jobs:
       env: FLAVOR=cog.spur
     - stage: Stack builds
       env: FLAVOR=stack.spur
-
-gemfile:
-  - A
-  - B
-  - C
-  - D
 
 script:
   - uname -a
