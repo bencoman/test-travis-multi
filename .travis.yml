@@ -17,17 +17,17 @@ os:
   - osx 
 
 env:
-  - XX1=build.$TRAVIS_OS_NAME  XX2=32x86/squeak.cog.spur
+  - AAA1=build.$TRAVIS_OS_NAME  AAA2=32x86/squeak.cog.spur
 #  - MATRIX=32x86/pharo.cog.spur
 #  - MATRIX=64x64/squeak.cog.spur
 #  - MATRIX=64x64/pharo.cog.spur
 
-jobs:
-  include:
-    - stage: Production
-      env: FLAVOR=cog.spur
-    - stage: Stack builds
-      env: FLAVOR=stack.spur
+#jobs:
+#  include:
+#    - stage: Production
+#      env: FLAVOR=cog.spur
+#    - stage: Stack builds
+#      env: FLAVOR=stack.spur
 
 script:
   - uname -a
