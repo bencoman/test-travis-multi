@@ -1,20 +1,18 @@
-stages:
-  - Production
-  - Tests
-
 language: c
-
-osx_image: 
-  - xcode7.3
-
-dist:
-  - trusty
-  - precise
 
 os:
   - linux
   - osx 
   - windows
+
+osx_image: 
+  - xcode7.3
+
+dist: trusty
+
+stages:
+  - Production
+  - Tests
 
 env:
   - ARCH=64x64  FLAVOR=squeak.cog.spur
@@ -38,11 +36,22 @@ env:
 jobs:
   include:
     - stage: ADHOC LINUX BUILDS
-      os: osx
+
+      os: linux
       env:   ARCH=64x64  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
-    - env:   ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
-    - stage: ADHOC OTHER BUILDS
-      env: FLAVOR=stack.spur
+
+    - os: linux
+      env:   ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
+
+
+    - stage: ADHOC MAC BUILDS
+
+      os: osx
+      env:   ARCH=32x86  FLAVOR=pharo.cog.spur.lowcode      LINUX_HEARTBEAT=itimer
+
+    - os: osx
+      env:   ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
+
 
 script:
   - uname -a
