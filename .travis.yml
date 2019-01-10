@@ -10,23 +10,24 @@ name: "Production"
 
 os:
   - windows
-
-os:
+  - windows
+  - linux
   - linux
   - osx 
+  - osx
 
-env:
-  - DIALECT=squeak
-  - DIALECT=pharo
+#env:
+#  - DIALECT=squeak
+#  - DIALECT=pharo
 
-jobs:
-  include:
-    - stage: Cog builds
-      env: FLAVOR=cog.spur
-      name: "Cog"
-    - stage: Stack builds
-      env: FLAVOR=stack.spur
-      name: "Stack"
+#jobs:
+#  include:
+#    - stage: Cog builds
+#      env: FLAVOR=cog.spur
+#      name: "Cog"
+#    - stage: Stack builds
+#      env: FLAVOR=stack.spur
+#      name: "Stack"
 
 script:
   - uname -a
