@@ -38,6 +38,7 @@ env:
 jobs:
   include:
     - stage: ADHOC LINUX BUILDS
+      os: osx
       env:   ARCH=64x64  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
     - env:   ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
     - stage: ADHOC OTHER BUILDS
