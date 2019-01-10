@@ -19,10 +19,10 @@ jobs:
       env: FLAVOR=stack.spur
 
 gemfile:
-  - Gemfile
-  - gemfiles/rails4.gemfile
-  - gemfiles/rails31.gemfile
-  - gemfiles/rails32.gemfile
+  - A
+  - B
+  - C
+  - D
 
 script:
   - uname -a
