@@ -1,6 +1,3 @@
-_template: &_xxx
-    linux
-
 language: c
 
 osx_image: 
@@ -14,14 +11,14 @@ name: "Production"
 
 os:
   - windows
-  - *_xxx
+  - linux
   - osx 
 
 env:
   - ARCH=32x86 FLAVOUR=squeak.cog.spur
-#  - ARCH=32x86 FLAVOUR=pharo.cog.spur
-#  - ARCH=64x64 FLAVOUR=squeak.cog.spur
-#  - ARCH=64x64 FLAVOUR=pharo.cog.spur
+  - ARCH=32x86 FLAVOUR=pharo.cog.spur
+  - ARCH=64x64 FLAVOUR=squeak.cog.spur
+  - ARCH=64x64 FLAVOUR=pharo.cog.spur
 
 jobs:
   include:
