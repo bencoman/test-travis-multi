@@ -7,8 +7,6 @@ dist:
   - trusty
   - precise
 
-name: "Production"
-
 os:
   - windows
   - linux
