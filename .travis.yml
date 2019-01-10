@@ -7,3 +7,5 @@ script:
   - dir \
   - ls /
   - echo $PATH
+  - uname -a
+  - ls /etc/lsb*
