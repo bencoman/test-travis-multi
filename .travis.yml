@@ -4,3 +4,4 @@ os:
 script:
   - dir \
   - ls /
+  - echo $PATH
