@@ -5,4 +5,4 @@ os:
 
 script:
   - uname -a
-  - find /
+  - find / -name "*{*" -prune   # prune to avoid too log Travis Log
