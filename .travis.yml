@@ -17,18 +17,30 @@ os:
   - windows
 
 env:
+  - ARCH=64x64  FLAVOR=squeak.cog.spur
+  - ARCH=64x64  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=threaded
+  - ARCH=64x64  FLAVOR=newspeak.cog.spur
+
   - ARCH=32x86  FLAVOR=squeak.cog.spur
-  - ARCH=32x86  FLAVOR=pharo.cog.spur
+  - ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=threaded
+  - ARCH=32x86  FLAVOR=newspeak.cog.spur
 
   - ARCH=64x64  FLAVOR=squeak.cog.stack
   - ARCH=64x64  FLAVOR=pharo.cog.stack
+  - ARCH=64x64  FLAVOR=newspeak.cog.stack
 
-#jobs:
-#  include:
-#    - stage: Production
-#      env: FLAVOR=cog.spur
-#    - stage: Stack builds
-#      env: FLAVOR=stack.spur
+  - ARCH=32x86  FLAVOR=squeak.cog.stack
+  - ARCH=32x86  FLAVOR=pharo.cog.stack
+  - ARCH=32x86  FLAVOR=newspeak.cog.stack
+
+jobs:
+  include:
+    - stage: ADHOC LINUX BUILDS
+      env:   ARCH=64x64  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
+    - stage: ADHOC LINUX BUILDS
+      env:   ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
+    - stage: ADHOC OTHER BUILDS
+      env: FLAVOR=stack.spur
 
 script:
   - uname -a
