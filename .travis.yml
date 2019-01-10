@@ -13,10 +13,10 @@ os:
   - osx 
 
 env:
-  - ARCH=32x86 FLAVOUR=squeak.cog.spur
-  - ARCH=32x86 FLAVOUR=pharo.cog.spur
-  - ARCH=64x64 FLAVOUR=squeak.cog.spur
-  - ARCH=64x64 FLAVOUR=pharo.cog.spur
+  - MATRIX=32x86/squeak.cog.spur
+  - MATRIX=32x86/pharo.cog.spur
+  - MATRIX=64x64/squeak.cog.spur
+  - MATRIX=64x64/pharo.cog.spur
 
 jobs:
   include:
