@@ -44,14 +44,19 @@ jobs:
       env:   ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
 
 
-    - stage: ADHOC MAC BUILDS
+    - stage: EXPERIMENTAL
 
       os: osx
-      env:   ARCH=32x86  FLAVOR=pharo.cog.spur.lowcode      LINUX_HEARTBEAT=itimer
+      env:   ARCH=32x86  FLAVOR=pharo.cog.spur.lowcode
 
     - os: osx
-      env:   ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
+      env:   ARCH=64x64  FLAVOR=pharo.cog.spur.lowcode
 
+  allow_failures:
+  - env: FLAVOR=squeak.sista.spur
+  - env: FLAVOR=pharo.sista.spur
+  - env: FLAVOR=squeak.cog.spur.lowcode
+  - env: FLAVOR=pharo.cog.spur.lowcode
 
 script:
   - uname -a
