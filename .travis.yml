@@ -12,7 +12,7 @@ os:
   - windows
   - windows
   - linux
-  - linux
+  - linux-32
   - osx 
   - osx
 
