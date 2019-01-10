@@ -36,21 +36,71 @@ env:
 jobs:
   include:
     - stage: ADHOC LINUX BUILDS
-
       os: linux
-      env:   ARCH=64x64  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
+      env: ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
 
-    - os: linux
-      env:   ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
+    - os:       linux
+      env: ARCH=64x64  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
 
 
-    - stage: EXPERIMENTAL
+    - stage: EXPERIMENTAL LOWCODE (failures allowed)
+      os:       osx
+      env: ARCH=32x86  FLAVOR=pharo.cog.spur.lowcode
 
-      os: osx
-      env:   ARCH=32x86  FLAVOR=pharo.cog.spur.lowcode
+    - os:       osx
+      env: ARCH=64x64  FLAVOR=pharo.cog.spur.lowcode
 
-    - os: osx
-      env:   ARCH=64x64  FLAVOR=pharo.cog.spur.lowcode
+    - os:       osx
+      env: ARCH=32x86  FLAVOR=pharo.stack.spur.lowcode
+
+    - os:       osx
+      env: ARCH=64x64  FLAVOR=pharo.stack.spur.lowcode
+
+
+    - stage: EXPERIMENTAL SISTA (failures allowed)
+      os:       osx
+      env: ARCH=32x86 FLAVOR=pharo.sista.spur
+
+    - os:       linux
+      env: ARCH=32x86 FLAVOR=pharo.sista.spur HEARTBEAT=threaded
+      compiler: clang
+
+    - os:       linux
+      env: ARCH=32x86 FLAVOR=pharo.sista.spur HEARTBEAT=itimer 
+      compiler: clang
+
+    - os:       linux
+      env: ARCH=32x86 FLAVOR=squeak.sista.spur 
+
+    - os:       linux
+      env: ARCH=32x86 FLAVOR=squeak.sista.spur 
+
+
+    - stage: Linux32ARMv6
+      os:       linux
+      env: ARCH=linux32ARMv6 FLAVOR=newspeak.cog.spur CHROOT="schroot -p -c rpi -- bash -c"
+      group:    edge
+
+    - os:       linux
+      env: ARCH=linux32ARMv6 FLAVOR=newspeak.stack.spur CHROOT="schroot -p -c rpi -- bash -c"
+      group:    edge
+
+    - os:       linux
+      env: ARCH=linux32ARMv6 FLAVOR=squeak.cog.spur CHROOT="schroot -p -c rpi -- bash -c"
+      group:    edge
+
+    - os:       linux
+      env: ARCH=linux32ARMv6 FLAVOR=pharo.cog.spur CHROOT="schroot -p -c rpi -- bash -c"
+      group:    edge
+
+    - os:       linux
+      env: ARCH=linux32ARMv6 FLAVOR=squeak.stack.spur CHROOT="schroot -p -c rpi -- bash -c"
+      group:    edge
+
+    - os:       linux
+      env: ARCH=linux32ARMv6 FLAVOR=squeak.stack.v3 CHROOT="schroot -p -c rpi -- bash -c"
+      group:    edge
+
 
   allow_failures:
   - env: FLAVOR=squeak.sista.spur
