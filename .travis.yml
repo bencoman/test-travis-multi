@@ -31,6 +31,6 @@ env:
 
 script:
   - uname -a
-  - env
+  - env | sort
 #  - find / -maxdepth 2 -print -name proc -prune || true
 #  - find /proc -maxdepth 2
