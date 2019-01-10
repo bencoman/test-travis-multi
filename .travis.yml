@@ -2,6 +2,10 @@ language: c
 
 osx_image: xcode7.3
 
+dist:
+  - trusty
+  - precise
+
 name: "Production"
 
 os:
