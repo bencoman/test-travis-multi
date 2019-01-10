@@ -17,10 +17,10 @@ os:
   - osx 
 
 env:
-  - AAA1=build.$TRAVIS_OS_NAME  AAA2=32x86/squeak.cog.spur
-#  - MATRIX=32x86/pharo.cog.spur
-#  - MATRIX=64x64/squeak.cog.spur
-#  - MATRIX=64x64/pharo.cog.spur
+  - PLATFORM=$TRAVIS_OS_NAME ARCH=32x86 FLAVOR=squeak.cog.spur
+  - PLATFORM=$TRAVIS_OS_NAME ARCH=32x86 FLAVOR=pharo.cog.spur
+  - PLATFORM=$TRAVIS_OS_NAME ARCH=64x64 FLAVOR=squeak.cog.spur
+  - PLATFORM=$TRAVIS_OS_NAME ARCH=64x64 FLAVOR=pharo.cog.spur
 
 #jobs:
 #  include:
