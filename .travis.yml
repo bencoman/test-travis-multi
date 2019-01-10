@@ -21,8 +21,10 @@ jobs:
   include:
     - stage: Cog builds
       env: FLAVOR=cog.spur
+      name: "Cog"
     - stage: Stack builds
       env: FLAVOR=stack.spur
+      name: "Stack"
 
 script:
   - uname -a
