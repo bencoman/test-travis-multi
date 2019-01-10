@@ -1,8 +1,10 @@
+_template: &_xxx
+    linux
+
 language: c
 
 osx_image: 
   - xcode7.3
-  - xcode10
 
 dist:
   - trusty
@@ -12,24 +14,23 @@ name: "Production"
 
 os:
   - windows
-  - windows
-  - linux
-  - linux
+  - *_xxx
   - osx 
-  - osx
 
-#env:
-#  - DIALECT=squeak
-#  - DIALECT=pharo
+env:
+  - ARCH=32x86 FLAVOUR=squeak.cog.spur
+#  - ARCH=32x86 FLAVOUR=pharo.cog.spur
+#  - ARCH=64x64 FLAVOUR=squeak.cog.spur
+#  - ARCH=64x64 FLAVOUR=pharo.cog.spur
 
-#jobs:
-#  include:
-#    - stage: Cog builds
-#      env: FLAVOR=cog.spur
-#      name: "Cog"
-#    - stage: Stack builds
-#      env: FLAVOR=stack.spur
-#      name: "Stack"
+jobs:
+  include:
+    - stage: Cog builds
+      env: FLAVOR=cog.spur
+      name: "Cog"
+    - stage: Stack builds
+      env: FLAVOR=stack.spur
+      name: "Stack"
 
 script:
   - uname -a
