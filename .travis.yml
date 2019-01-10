@@ -34,16 +34,14 @@ env:
   - ARCH=32x86  FLAVOR=squeak.stack.v3
 
 jobs:
+  fast_finish: true
+  exclude:
+    - stage: PRODUCTION 
+      env: ARCH=32x86  FLAVOR=squeak.cog.spur
+
   include:
-    - stage: ADHOC LINUX BUILDS
-      os: linux
-      env: ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
-
-    - os:       linux
-      env: ARCH=64x64  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
-
-
-    - stage: EXPERIMENTAL LOWCODE (failures allowed)
+    - stage: EXPERIMENTAL LOWCODE & SISTA (failures allowed)
+      # LOWCODE
       os:       osx
       env: ARCH=32x86  FLAVOR=pharo.cog.spur.lowcode
 
@@ -56,10 +54,15 @@ jobs:
     - os:       osx
       env: ARCH=64x64  FLAVOR=pharo.stack.spur.lowcode
 
-
-    - stage: EXPERIMENTAL SISTA (failures allowed)
-      os:       osx
+      # SISTA
+    - os:       osx
       env: ARCH=32x86 FLAVOR=pharo.sista.spur
+
+    - os:       linux
+      env: ARCH=32x86 FLAVOR=squeak.sista.spur 
+
+    - os:       linux
+      env: ARCH=32x86 FLAVOR=squeak.sista.spur 
 
     - os:       linux
       env: ARCH=32x86 FLAVOR=pharo.sista.spur HEARTBEAT=threaded
@@ -69,11 +72,13 @@ jobs:
       env: ARCH=32x86 FLAVOR=pharo.sista.spur HEARTBEAT=itimer 
       compiler: clang
 
-    - os:       linux
-      env: ARCH=32x86 FLAVOR=squeak.sista.spur 
+
+    - stage: ADHOC LINUX BUILDS
+      os: linux
+      env: ARCH=32x86  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
 
     - os:       linux
-      env: ARCH=32x86 FLAVOR=squeak.sista.spur 
+      env: ARCH=64x64  FLAVOR=pharo.cog.spur      LINUX_HEARTBEAT=itimer
 
 
     - stage: Linux32ARMv6
