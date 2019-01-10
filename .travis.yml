@@ -11,7 +11,7 @@ env:
   - DIALECT=squeak
   - DIALECT=pharo
 
-env:
+matrix:
   - FLAVOR=cog.spur
   - FLAVOR=stack.spur
 
