@@ -12,9 +12,9 @@ dist:
   - precise
 
 os:
-  - windows
   - linux
   - osx 
+  - windows
 
 env:
   - ARCH=32x86  FLAVOR=squeak.cog.spur
