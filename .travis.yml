@@ -1,8 +1,6 @@
-language: c
-
 os:
   - windows
 
 script:
-  - dir
+  - dir \
   - ls /
