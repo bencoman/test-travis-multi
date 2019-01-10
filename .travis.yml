@@ -2,9 +2,10 @@ language: c
 
 osx_image: xcode7.3
 
+name: "Production"
+
 os:
   - windows
-  - linux
   - linux
   - osx 
 
