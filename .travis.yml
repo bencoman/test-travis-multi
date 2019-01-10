@@ -1,3 +1,7 @@
+stages:
+  - Production
+  - Tests
+
 language: c
 
 osx_image: 
@@ -13,22 +17,20 @@ os:
   - osx 
 
 env:
-  - MATRIX=32x86/squeak.cog.spur
-  - MATRIX=32x86/pharo.cog.spur
-  - MATRIX=64x64/squeak.cog.spur
-  - MATRIX=64x64/pharo.cog.spur
+  - XX1=build.$TRAVIS_OS_NAME  XX2=32x86/squeak.cog.spur
+#  - MATRIX=32x86/pharo.cog.spur
+#  - MATRIX=64x64/squeak.cog.spur
+#  - MATRIX=64x64/pharo.cog.spur
 
 jobs:
   include:
-    - stage: Cog builds
+    - stage: Production
       env: FLAVOR=cog.spur
-      name: "Cog"
     - stage: Stack builds
       env: FLAVOR=stack.spur
-      name: "Stack"
 
 script:
   - uname -a
   - env
-  - find / -maxdepth 2 -print -name proc -prune || true
-  # - find /proc -maxdepth 2
+#  - find / -maxdepth 2 -print -name proc -prune || true
+#  - find /proc -maxdepth 2
