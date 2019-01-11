@@ -44,14 +44,14 @@ jobs:
   - env: FAIL=OK
 
   include: [
-    { "stage":"PRODUCTION",  "os":"linux",  "env": "BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
-    { "stage":"PRODUCTION",  "os":"linux",  "env": "BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
-    { "stage":"PRODUCTION",  "os":"osx",    "env": "BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
-    { "stage":"PRODUCTION",  "os":"osx",    "env": "BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
-    { "stage":"PRODUCTION",  "os":"linux",  "env": "BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
-    { "stage":"PRODUCTION",  "os":"linux",  "env": "BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
-    { "stage":"PRODUCTION",  "os":"osx",    "env": "BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
-    { "stage":"PRODUCTION",  "os":"osx",    "env": "BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
+    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
+    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
+    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
+    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
+    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
+    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 		}, 
+    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
+    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 		}, 
     {
       "os": "osx", 
       "env": "BUILD=32x86/pharo.sista.spur FAIL=OK", 
