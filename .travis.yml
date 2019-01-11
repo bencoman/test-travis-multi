@@ -16,18 +16,18 @@ os:
   -       windows
           #
 env:      #    
-  - BUILD=64x64/squeak.cog.spur     TESTIMAGE=skip
-  - BUILD=64x64/pharo.cog.spur      TESTIMAGE=skip
-  - BUILD=64x64/newspeak.cog.spur   TESTIMAGE=skip
+#  - BUILD=64x64/squeak.cog.spur     TESTIMAGE=skip
+#  - BUILD=64x64/pharo.cog.spur      TESTIMAGE=skip
+#  - BUILD=64x64/newspeak.cog.spur   TESTIMAGE=skip
 
-  - BUILD=32x86/squeak.cog.spur     TESTIMAGE=Squeak32-5.1
-  - BUILD=32x86/pharo.cog.spur      TESTIMAGE=Pharo32-5.0
-  - BUILD=32x86/newspeak.cog.spur   TESTIMAGE="refer newspeakBootstrap.sh"
-  - BUILD=32x86/squeak.cog.v3       TESTIMAGE=Squeak32-4.6
+#  - BUILD=32x86/squeak.cog.spur     TESTIMAGE=Squeak32-5.1
+#  - BUILD=32x86/pharo.cog.spur      TESTIMAGE=Pharo32-5.0
+#  - BUILD=32x86/newspeak.cog.spur   TESTIMAGE="refer newspeakBootstrap.sh"
+#  - BUILD=32x86/squeak.cog.v3       TESTIMAGE=Squeak32-4.6
 
-  - BUILD=64x64/squeak.cog.stack    TESTIMAGE=skip
-  - BUILD=64x64/pharo.cog.stack     TESTIMAGE=skip
-  - BUILD=64x64/newspeak.cog.stack  TESTIMAGE="refer newspeakBootstrap.sh"
+#  - BUILD=64x64/squeak.cog.stack    TESTIMAGE=skip
+#  - BUILD=64x64/pharo.cog.stack     TESTIMAGE=skip
+#  - BUILD=64x64/newspeak.cog.stack  TESTIMAGE="refer newspeakBootstrap.sh"
 
   - BUILD=32x86/squeak.cog.stack    TESTIMAGE=Squeak32-5.1
   - BUILD=32x86/pharo.cog.stack     TESTIMAGE=Pharo32-5.0
