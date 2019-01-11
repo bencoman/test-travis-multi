@@ -7,15 +7,16 @@ osx_image:
 dist: trusty
 
 stages:
+  - X
   - Production
   - Test # The 'Test' stage is formed from 'os:' section crosstabbed with 'env:' section
 
 os:
   -       linux
-  -       osx 
-  -       windows
+#  -       osx 
+#  -       windows
           #
-env:      #    
+env:
 #  - BUILD=64x64/squeak.cog.spur     TESTIMAGE=skip
 #  - BUILD=64x64/pharo.cog.spur      TESTIMAGE=skip
 #  - BUILD=64x64/newspeak.cog.spur   TESTIMAGE=skip
@@ -29,82 +30,73 @@ env:      #
 #  - BUILD=64x64/pharo.cog.stack     TESTIMAGE=skip
 #  - BUILD=64x64/newspeak.cog.stack  TESTIMAGE="refer newspeakBootstrap.sh"
 
-  - BUILD=32x86/squeak.cog.stack    TESTIMAGE=Squeak32-5.1
-  - BUILD=32x86/pharo.cog.stack     TESTIMAGE=Pharo32-5.0
-  - BUILD=32x86/newspeak.cog.stack  TESTIMAGE=skip
-  - BUILD=32x86/squeak.stack.v3     TESTIMAGE=Squeak32-4.6
+#  - BUILD=32x86/squeak.cog.stack    TESTIMAGE=Squeak32-5.1
+#  - BUILD=32x86/pharo.cog.stack     TESTIMAGE=Pharo32-5.0
+#  - BUILD=32x86/newspeak.cog.stack  TESTIMAGE=skip
+#  - BUILD=32x86/squeak.stack.v3     TESTIMAGE=Squeak32-4.6
 
 script:
   - ./travis_build.sh 
 
-jobs:
-  fast_finish: true
+matrix:
+#  fast_finish: true
 
   allow_failures:
-  - env: FAIL=OK
+  - env: BUILD=32x86/pharo.sista.spur FAIL=OK
 
   include: [
-    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
-    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
-    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
-    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
-    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
-    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 		}, 
-    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
-    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 		}, 
+#    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
+#    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 		}, 
+#    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
+#    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 		}, 
+#    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
+#    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
+#    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
+#    { "stage":"PRODUCTION",  "os":"osx",    "env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
     {
+      "stage": "EXPERIMENTAL",
       "os": "osx", 
-      "env": "BUILD=32x86/pharo.sista.spur FAIL=OK", 
-      "stage": "EXPERIMENTAL LOWCODE & SISTA (failures allowed)"
+      "env": "BUILD=32x86/pharo.sista.spur FAIL=OK" 
     }, 
+#    {
+#      "os": "linux", 
+#      "env": "BUILD=32x86/squeak.sista.spur  FAIL=OK"
+#    }, 
+#    {
+#      "os": "linux", 
+#      "env": "BUILD=32x86/squeak.sista.spur  FAIL=OK"
+#    }, 
+#    {
+#      "os": "linux", 
+#      "env": "BUILD=32x86/pharo.sista.spur FAIL=OK HEARTBEAT=threaded", 
+#      "compiler": "clang"
+#    }, 
+##    {
+#      "os": "linux", 
+#      "env": "BUILD=32x86/pharo.sista.spur FAIL=OK HEARTBEAT=itimer", 
+#      "compiler": "clang"
+#    }, 
+#    {
+#      "os": "osx", 
+#      "env": "BUILD=32x86/pharo.cog.spur.lowcode FAIL=OK"
+#    }, 
+#    {
+#      "os": "osx", 
+#      "env": "BUILD=64x64/pharo.cog.spur.lowcode FAIL=OK"
+#    }, 
+#    {
+#      "os": "osx", 
+#      "env": "BUILD=32x86/pharo.stack.spur.lowcode FAIL=OK"
+#    }, 
+#    {
+#      "os": "osx", 
+#      "env": "BUILD=64x64/pharo.stack.spur.lowcode FAIL=OK"
+#    }, 
     {
-      "os": "linux", 
-      "env": "BUILD=32x86/squeak.sista.spur  FAIL=OK"
-    }, 
-    {
-      "os": "linux", 
-      "env": "BUILD=32x86/squeak.sista.spur  FAIL=OK"
-    }, 
-    {
-      "os": "linux", 
-      "env": "BUILD=32x86/pharo.sista.spur FAIL=OK HEARTBEAT=threaded", 
-      "compiler": "clang"
-    }, 
-    {
-      "os": "linux", 
-      "env": "BUILD=32x86/pharo.sista.spur FAIL=OK HEARTBEAT=itimer", 
-      "compiler": "clang"
-    }, 
-    {
-      "os": "osx", 
-      "env": "BUILD=32x86/pharo.cog.spur.lowcode FAIL=OK"
-    }, 
-    {
-      "os": "osx", 
-      "env": "BUILD=64x64/pharo.cog.spur.lowcode FAIL=OK"
-    }, 
-    {
-      "os": "osx", 
-      "env": "BUILD=32x86/pharo.stack.spur.lowcode FAIL=OK"
-    }, 
-    {
-      "os": "osx", 
-      "env": "BUILD=64x64/pharo.stack.spur.lowcode FAIL=OK"
-    }, 
-    {
-      "os": "linux", 
-      "env": "BUILD=32x86/pharo.cog.spur      HEARTBEAT=itimer", 
-      "stage": "OTHER BUILDS"
-    }, 
-    {
-      "os": "linux", 
-      "env": "BUILD=64x64/pharo.cog.spur      HEARTBEAT=itimer"
-    }, 
-    {
+      "stage": "OTHER BUILDS",
       "os": "linux", 
       "group": "edge", 
       "env": "BUILD=32ARMv6/newspeak.cog.spur CHROOT=\"schroot -p -c rpi -- bash -c\"", 
-      "stage": "Linux32ARMv6"
     }, 
     {
       "os": "linux", 
@@ -130,5 +122,13 @@ jobs:
       "os": "linux", 
       "group": "edge", 
       "env": "BUILD=32ARMv6/squeak.stack.v3 CHROOT=\"schroot -p -c rpi -- bash -c\""
+    },
+    {
+      "os": "linux", 
+      "env": "BUILD=32x86/pharo.cog.spur      HEARTBEAT=itimer" 
+    }, 
+    {
+      "os": "linux", 
+      "env": "BUILD=64x64/pharo.cog.spur      HEARTBEAT=itimer"
     }
   ]
