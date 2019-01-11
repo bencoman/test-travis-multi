@@ -8,11 +8,11 @@ if [[ "${PRODUCTION}" -ne "" ]]; then
 fi
 echo BUILDING... ${TRAVIS_OS_NAME}${BUILD}
 
-if [[ "${TESTIMAGE}"="Squeak32-4.6" ]]; then
+if [[ "${TESTIMAGE}" -eq "Squeak32-4.6" ]]; then
   exit 1
 fi
 
-if [[ "${FAIL}"="OK" ]]; then
+if [[ "${FAIL}" -eq "OK" ]]; then
   exit 1
 fi
 
