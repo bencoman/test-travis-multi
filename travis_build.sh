@@ -27,13 +27,13 @@ fi
 CPU=$(echo ${BUILD} | cut -d/ -f1)
 FLAVOR=$(echo ${BUILD} | cut -d/ -f2)
 ARCH=${TRAVIS_OS_NAME}${CPU}
-which travis
 echo BUILDING... build.${ARCH}/${FLAVOR}
 pwd
+which travis
 gem install travis
-find / -name travis 2>/dev/null
-exit 1
-
+which travis
+echo #####################
+find /home/travis/.rvm -name "*travis*" | grep bin
 
 # PLACEHOLDER BUILD
 #find /home -maxdepth 4
@@ -42,3 +42,4 @@ exit 1
 #   echo DONE
 #fi
 
+exit 1

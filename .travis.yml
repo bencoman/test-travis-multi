@@ -1,6 +1,5 @@
 language: c
 
-
 osx_image: 
   - xcode7.3
 
@@ -39,9 +38,6 @@ os:
   -       osx 
 #  -       windows
 
-script:
-  - ./travis_build.sh 
-
 matrix:
   fast_finish: true
 
@@ -78,10 +74,21 @@ matrix:
     { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.stack.spur   CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
     { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.stack.v3     CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" },
 
+    # For adhoc use to iterate fast over a particular failing build
+    { "stage":"Fail fast",	"os": "linux", 	"env": "BUILD=64x64/pharo.cog.spur.lowcode" 						}, 
+
     # Faster builds later makes best use of early finishing slow jobs.
     { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32x86/pharo.cog.spur  	HEARTBEAT=itimer" }, 
     { "stage":"Other", 		"os":"linux", 	"env": "BUILD=64x64/pharo.cog.spur      HEARTBEAT=itimer" }
 
-    # For adhoc use to iterate fast over a particular failing build
-    { "stage":"Fail fast",	"os": "linux", 	"env": "BUILD=64x64/pharo.cog.spur.lowcode" 						}, 
   ]
+
+before_install:
+  - echo #################### BEFORE INSTALL ###########################3
+  - gem install travis
+  - which travis
+  
+
+script:
+  - ./travis_build.sh 
+
