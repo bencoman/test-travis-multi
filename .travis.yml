@@ -6,7 +6,6 @@ osx_image:
 dist: trusty
 
 stages:
-  - Fail fast
   - Production
   - Coverage
   - Experimental
@@ -35,7 +34,7 @@ env:
   - BUILD=32x86/squeak.stack.v3     TESTIMAGE=Squeak32-4.6
 os:
   -       linux
-  -       osx 
+#  -       osx 
 #  -       windows
 
 matrix:
@@ -43,12 +42,12 @@ matrix:
 
   allow_failures:  # Note, 'env:' here string matches whole line *eactly* space for space, not individual vars
   - stage: Experimental
-  - stage: Coverage  # Temporary, for demonstration only
-  - stage: Other     # Temporary, for demonstration only
+#  - stage: Coverage  # Temporary, for demonstration only
+#  - stage: Other     # Temporary, for demonstration only
  
   include: [
     # The travis_build.sh script expects these production jobs formatted like this to filter duplicates out of 'Test' stage.
-    { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1 TESTFAIL=1"	}, 
+    { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1"	}, 
     { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
     { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
     { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
@@ -74,21 +73,16 @@ matrix:
     { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.stack.spur   CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
     { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.stack.v3     CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" },
 
-    # For adhoc use to iterate fast over a particular failing build
-    { "stage":"Fail fast",	"os": "linux", 	"env": "BUILD=64x64/pharo.cog.spur.lowcode" 						}, 
-
     # Faster builds later makes best use of early finishing slow jobs.
     { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32x86/pharo.cog.spur  	HEARTBEAT=itimer" }, 
     { "stage":"Other", 		"os":"linux", 	"env": "BUILD=64x64/pharo.cog.spur      HEARTBEAT=itimer" }
 
   ]
 
-before_install:
-  - echo #################### BEFORE INSTALL ###########################3
-  - gem install travis
-  - which travis
-  
-
 script:
   - ./travis_build.sh 
 
+before_install:
+  - echo !!!!!!!!!BEFORE INSTALL!!!!!!!!!!!!
+  - ./travis_cancel_dup_prod_job.sh
+  - echo 2222222222222222222222222
