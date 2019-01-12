@@ -42,7 +42,7 @@ matrix:
 #  fast_finish: true
 
   allow_failures:
-  - env: BUILD=32x86/pharo.sista.spur FAIL=OK
+  - env: BUILD=32x86/pharo.sista.spur   FAIL=OK
 
   include: [
 #    { "stage":"PRODUCTION",  "os":"linux",  "env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
