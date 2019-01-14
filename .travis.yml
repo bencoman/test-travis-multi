@@ -49,5 +49,7 @@ matrix:
 #  - ./travis_cancel_dup_prod_job.sh
 
 script:
+  - if ./is_production_dup.sh ; then sleep 5; exit 0 ; fi  # skip duplciates of production builds
+  
   - ./travis_build.sh 
 
