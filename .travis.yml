@@ -49,16 +49,16 @@ matrix:
     # The travis_build.sh script expects these production jobs formatted like this to filter duplicates out of 'Test' stage.
     { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1"	}, 
     { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
-    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
-    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
+#    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
+#    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
     { "stage":"Production",  	"os":"linux",	"env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
     { "stage":"Production",  	"os":"linux",	"env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
-    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
-    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
+#    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
+#    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
 
     { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=32x86/pharo.sista.spur"							}, 
     { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/squeak.sista.spur" 							}, 
-    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/squeak.sista.spur" 							}, 
+    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/squeak.sista.spur TESTFAIL=1" 					}, 
     { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/pharo.sista.spur 	HEARTBEAT=threaded", 	"compiler": "clang" 	}, 
     { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/pharo.sista.spur 	HEARTBEAT=itimer", 	"compiler": "clang" 	}, 
     { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=32x86/pharo.cog.spur.lowcode" 						}, 
@@ -80,9 +80,6 @@ matrix:
   ]
 
 script:
+  - if ./is_production_dup.sh ; then exit 0 ; fi # skip if job duplicates a production build
   - ./travis_build.sh 
 
-before_install:
-  - echo !!!!!!!!!BEFORE INSTALL!!!!!!!!!!!!
-  - ./travis_cancel_dup_prod_job.sh
-  - echo 2222222222222222222222222
