@@ -30,7 +30,7 @@ matrix:
 
   allow_failures:  # Note, 'env:' here string matches whole line *eactly* space for space, not individual vars
   - stage: Experimental
-#  - stage: Coverage  # Temporary, for demonstration only
+  - stage: Coverage  # Temporary, for demonstration only
 #  - stage: Other     # Temporary, for demonstration only
  
   include: [
