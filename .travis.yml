@@ -5,79 +5,115 @@ osx_image:
 
 dist: trusty
 
-stages:
-  - Production
-  - Coverage
-  - Experimental
-  - Other
 
 # Sections 'os:' and 'env:' are cross-tabulated to form the coverage matrix
 # The travis_build.sh script ensures 'Production' builds are not built twice.
-stage: Coverage
-env:
-  - BUILD=64x64/squeak.cog.spur     TESTIMAGE=skip
-  - BUILD=64x64/pharo.cog.spur      TESTIMAGE=skip
-  - BUILD=64x64/newspeak.cog.spur   TESTIMAGE=skip
+#env:
+#  - BUILD=64x64/squeak.cog.spur     TESTIMAGE=skip
+#  - BUILD=64x64/pharo.cog.spur      TESTIMAGE=skip
+#  - BUILD=64x64/newspeak.cog.spur   TESTIMAGE=skip
 
-  - BUILD=32x86/squeak.cog.spur     TESTIMAGE=Squeak32-5.1
-  - BUILD=32x86/pharo.cog.spur      TESTIMAGE=Pharo32-5.0
-  - BUILD=32x86/newspeak.cog.spur   TESTIMAGE="refer newspeakBootstrap.sh"
-  - BUILD=32x86/squeak.cog.v3       TESTIMAGE=Squeak32-4.6
+#  - BUILD=32x86/squeak.cog.spur     TESTIMAGE=Squeak32-5.1
+#  - BUILD=32x86/pharo.cog.spur      TESTIMAGE=Pharo32-5.0
+#  - BUILD=32x86/newspeak.cog.spur   TESTIMAGE="refer newspeakBootstrap.sh"
+#  - BUILD=32x86/squeak.cog.v3       TESTIMAGE=Squeak32-4.6
+#
+#  - BUILD=64x64/squeak.cog.stack    TESTIMAGE=skip
+#  - BUILD=64x64/pharo.cog.stack     TESTIMAGE=skip
+#  - BUILD=64x64/newspeak.cog.stack  TESTIMAGE="refer newspeakBootstrap.sh"
+#
+#  - BUILD=32x86/squeak.cog.stack    TESTIMAGE=Squeak32-5.1
+#  - BUILD=32x86/pharo.cog.stack     TESTIMAGE=Pharo32-5.0
+#  - BUILD=32x86/newspeak.cog.stack  TESTIMAGE=skip
+#  - BUILD=32x86/squeak.stack.v3     TESTIMAGE=Squeak32-4.6
 
-  - BUILD=64x64/squeak.cog.stack    TESTIMAGE=skip
-  - BUILD=64x64/pharo.cog.stack     TESTIMAGE=skip
-  - BUILD=64x64/newspeak.cog.stack  TESTIMAGE="refer newspeakBootstrap.sh"
-
-  - BUILD=32x86/squeak.cog.stack    TESTIMAGE=Squeak32-5.1
-  - BUILD=32x86/pharo.cog.stack     TESTIMAGE=Pharo32-5.0
-  - BUILD=32x86/newspeak.cog.stack  TESTIMAGE=skip
-  - BUILD=32x86/squeak.stack.v3     TESTIMAGE=Squeak32-4.6
+env: 
+  - X=1
+  - X=2
+  - X=3
+  - X=4
 os:
   -       linux
   -       osx 
 #  -       windows
 
+stage: Coverage
+
 matrix:
-  fast_finish: true
+  exclude:
+  - &P1 { "os": "linux", "env": "X=3" } 
+  - &P2 { "os": "osx",   "env": "X=4" }
 
-  allow_failures:  # Note, 'env:' here string matches whole line *eactly* space for space, not individual vars
-  - stage: Experimental
- 
-  include: [
-    # The travis_build.sh script expects these production jobs formatted like this to filter duplicates out of 'Test' stage.
-    { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1"	}, 
-    { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
-    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
-    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
-    { "stage":"Production",  	"os":"linux",	"env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
-    { "stage":"Production",  	"os":"linux",	"env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
-    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
-    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
+jobs:
+  include:
+  - stage: Production 
+    <<: *P1
+  - stage: Production
+    <<: *P2
 
-    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=32x86/pharo.sista.spur"							}, 
-    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/squeak.sista.spur" 							}, 
-    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/squeak.sista.spur TESTFAIL=1" 					}, 
-    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/pharo.sista.spur 	HEARTBEAT=threaded", 	"compiler": "clang" 	}, 
-    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/pharo.sista.spur 	HEARTBEAT=itimer", 	"compiler": "clang" 	}, 
-    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=32x86/pharo.cog.spur.lowcode" 						}, 
-    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=64x64/pharo.cog.spur.lowcode" 						}, 
-    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=32x86/pharo.stack.spur.lowcode" 						}, 
-    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=64x64/pharo.stack.spur.lowcode" 						}, 
+stages:
+  - Production
+  - Coverage
+  - &mystage Experimental
+  - Other
 
-    { "stage":"Other", 		"os":"linux",	"env": "BUILD=32ARMv6/newspeak.cog.spur   CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
-    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/newspeak.stack.spur CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
-    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.cog.spur     CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
-    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/pharo.cog.spur      CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
-    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.stack.spur   CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
-    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.stack.v3     CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" },
+
+#      {
+#        "env": "X=3", 
+#        "stage": *mystage
+#      }, 
+#      {
+#        "env": "X=4", 
+##        "stage": *mystage
+#      }, 
+#]
+
+#matrix:
+#  exclude:
+#    - env: X=2
+#
+#  stage: Other
+#    include:
+#    - env
+
+#    - stage: STAGE2
+#      env: FOO=foo21
+#    - env: FOO=foo22
+
+#  include: [
+#    # The travis_build.sh script expects these production jobs formatted like this to filter duplicates out of 'Test' stage.
+#    { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1"	}, 
+#    { "stage":"Production",  	"os":"linux",	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
+#    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/squeak.cog.spur  TESTIMAGE=Squeak32-5.1" 	}, 
+#    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=32x86/pharo.cog.spur   TESTIMAGE=Pharo32-5.0" 	}, 
+#    { "stage":"Production",  	"os":"linux",	"env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
+#    { "stage":"Production",  	"os":"linux",	"env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
+#    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=64x64/squeak.cog.spur  TESTIMAGE=skip" 		}, 
+#    { "stage":"Production",  	"os":"osx",  	"env":"BUILD=64x64/pharo.cog.spur   TESTIMAGE=skip" 		}, 
+#
+#    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=32x86/pharo.sista.spur"							}, 
+#    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/squeak.sista.spur" 							}, 
+#    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/squeak.sista.spur TESTFAIL=1" 					}, 
+##    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/pharo.sista.spur 	HEARTBEAT=threaded", 	"compiler": "clang" 	}, 
+#    { "stage":"Experimental",	"os": "linux", 	"env": "BUILD=32x86/pharo.sista.spur 	HEARTBEAT=itimer", 	"compiler": "clang" 	}, 
+#    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=32x86/pharo.cog.spur.lowcode" 						}, 
+#    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=64x64/pharo.cog.spur.lowcode" 						}, 
+#    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=32x86/pharo.stack.spur.lowcode" 						}, 
+#    { "stage":"Experimental",	"os": "osx", 	"env": "BUILD=64x64/pharo.stack.spur.lowcode" 						}, 
+#
+#    { "stage":"Other", 		"os":"linux",	"env": "BUILD=32ARMv6/newspeak.cog.spur   CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
+#    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/newspeak.stack.spur CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
+#    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.cog.spur     CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
+#    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/pharo.cog.spur      CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
+#    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.stack.spur   CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" }, 
+#    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32ARMv6/squeak.stack.v3     CHROOT=\"schroot -p -c rpi -- bash -c\"", "group": "edge" },
 
     # Faster builds later makes best use of early finishing slow jobs.
-    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32x86/pharo.cog.spur  	HEARTBEAT=itimer" }, 
-    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=64x64/pharo.cog.spur      HEARTBEAT=itimer" }
+#    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=32x86/pharo.cog.spur  	HEARTBEAT=itimer" }, 
+#    { "stage":"Other", 		"os":"linux", 	"env": "BUILD=64x64/pharo.cog.spur      HEARTBEAT=itimer" }
 
-  ]
+#  ]
 
-script:
-  - if ./is_production_dup.sh ; then exit 0 ; fi # skip if job duplicates a production build
-  - ./travis_build.sh 
+before_install:
+  - exit 1
 
