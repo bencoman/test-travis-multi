@@ -5,80 +5,55 @@ osx_image:
 
 dist: trusty
 
+stages:
+  - Production
+  - Coverage
+  - Experimental
+  - Other
+
+script:
+  - if [ "${TRAVIS_BUILD_STAGE_NAME}" = "Coverage" ] ; then exit 1 ; fi  # simulate failure
+  - exit 0  # simualte success
+
 
 # Sections 'os:' and 'env:' are cross-tabulated to form the coverage matrix
-# The travis_build.sh script ensures 'Production' builds are not built twice.
-#env:
-#  - BUILD=64x64/squeak.cog.spur     TESTIMAGE=skip
-#  - BUILD=64x64/pharo.cog.spur      TESTIMAGE=skip
-#  - BUILD=64x64/newspeak.cog.spur   TESTIMAGE=skip
 
-#  - BUILD=32x86/squeak.cog.spur     TESTIMAGE=Squeak32-5.1
-#  - BUILD=32x86/pharo.cog.spur      TESTIMAGE=Pharo32-5.0
-#  - BUILD=32x86/newspeak.cog.spur   TESTIMAGE="refer newspeakBootstrap.sh"
-#  - BUILD=32x86/squeak.cog.v3       TESTIMAGE=Squeak32-4.6
-#
-#  - BUILD=64x64/squeak.cog.stack    TESTIMAGE=skip
-#  - BUILD=64x64/pharo.cog.stack     TESTIMAGE=skip
-#  - BUILD=64x64/newspeak.cog.stack  TESTIMAGE="refer newspeakBootstrap.sh"
-#
-#  - BUILD=32x86/squeak.cog.stack    TESTIMAGE=Squeak32-5.1
-#  - BUILD=32x86/pharo.cog.stack     TESTIMAGE=Pharo32-5.0
-#  - BUILD=32x86/newspeak.cog.stack  TESTIMAGE=skip
-#  - BUILD=32x86/squeak.stack.v3     TESTIMAGE=Squeak32-4.6
+stage: Coverage
 
-env: 
-  - X=1
-  - X=2
-  - X=3
-  - X=4
+
+env: [
+    &E01 "BUILD=32x86/squeak.cog.spur     TESTIMAGE=Squeak32-5.1", 
+    &E02 "BUILD=32x86/pharo.cog.spur      TESTIMAGE=Pharo32-5.0", 
+    &E03 "BUILD=32x86/newspeak.cog.spur   TESTIMAGE=refer_newspeakBootstrap.sh", 
+    &E04 "BUILD=32x86/squeak.cog.v3       TESTIMAGE=Squeak32-4.6",
+]
 os:
   -       linux
   -       osx 
 #  -       windows
 
-stage: Coverage
 
 matrix:
-  exclude:
-  - &P1 { "os": "linux", "env": "X=3" } 
-  - &P2 { "os": "osx",   "env": "X=4" }
+  allow_failures:
+    - stage: Coverage
+  exclude: [
+    &P01 { "os": "linux", "env": *E01 },
+    &P02 { "os": "osx",   "env": *E02 },
+  ]
 
-jobs:
-  include:
-  - stage: Production 
-    <<: *P1
+aliases:
+  &TEST CHROOT=xxxx
+
+matrix:
+  include: 
   - stage: Production
-    <<: *P2
+    <<: *P01
+  - stage: Production
+    <<: *P02
 
-stages:
-  - Production
-  - Coverage
-  - &mystage Experimental
-  - Other
+  - { "stage":"Experimental",  "os":"osx",    "env":"BUILD=32x86/pharo.sista.spur" }
 
 
-#      {
-#        "env": "X=3", 
-#        "stage": *mystage
-#      }, 
-#      {
-#        "env": "X=4", 
-##        "stage": *mystage
-#      }, 
-#]
-
-#matrix:
-#  exclude:
-#    - env: X=2
-#
-#  stage: Other
-#    include:
-#    - env
-
-#    - stage: STAGE2
-#      env: FOO=foo21
-#    - env: FOO=foo22
 
 #  include: [
 #    # The travis_build.sh script expects these production jobs formatted like this to filter duplicates out of 'Test' stage.
@@ -114,6 +89,4 @@ stages:
 
 #  ]
 
-before_install:
-  - exit 1
 
